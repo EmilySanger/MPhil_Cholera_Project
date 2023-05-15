@@ -52,13 +52,13 @@ Pathway: `/nfs/users/nfs_e/ep16`
   `nano ~/.bashrc`
   
 * Submitting a Job to Panaroo \
-`ep16@farm5-head1:/lustre/scratch125/pam/teams/team216/ep16/dir.cholera_gff_190$ bsub.py 1 job.panarootest_gff_190 panaroo -i /nfs/pathogen/cholera_club/O-antiseq_JVIserogroupRefStrainOantigenLPSloci/gff/*gff -o out.panarootest_gff_190 --clean-mode moderate --merge_paralogs` 
+`ep16@farm5-head1:/lustre/scratch125/pam/teams/team216/ep16/dir.cholera_gff_190$ bsub.py 1 job.panarootest190 panaroo -i /lustre/scratch125/pam/teams/team216/ep16/dir.cholera_gff_190/*gff -o job.panarootest_gff_190 --clean-mode moderate --merge_paralogs'
 Three files are created 
-  1. A job file: job.panarootest_gff_190.o \
+  1. A job file: job.panarootest_gff_190.o 
      This should have a section as the bottom saying 'successfully completed' 
-  2. An error file: job.panarootes_gff_190.e \
+  2. An error file: job.panarootes_gff_190.e 
      This should have no errors indicated 
-  4. An output directory: out.panarootest_gff_190 \
+  4. An output directory: out.panarootest_gff_190 
     Check these files. Especially the summary statistics to see if perameters need to be changed
     
 
