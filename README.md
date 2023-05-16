@@ -8,11 +8,11 @@ Directions for how to use [R Markdown can be found at this Link](https://cambiot
 Three important directories to note 
 1.	**The main PaM cholera directory in nfs** \
 This is where the cholera data is found/stored.\
-Pathway: `/nfs/pathogen/cholera_club/O-antiseq_JVIserogroupRefStrainOantigenLPSloci/`
+Pathway: `/nfs/pathogen/cholera_club/O-antiseq_JVIserogroupRefStrainOantigenLPSloci`
 
 2.	**Your ep16 directory in lustre**\
 This is where you use/copy the cholera data and do your own calculations/computations.\
-Pathway: `/lustre/scratch125/pam/teams/team216/ep16/`
+Pathway: `/lustre/scratch125/pam/teams/team216/ep16`
 
 3.	**Your ep16 directory in nfs**\
 This is where you store your results.\
@@ -66,7 +66,7 @@ Three files are created
 *  Move to the directory containing the gff cholera samples \
 `ep16@farm5-head2:/lustre/scratch125/pam/teams/team216/ep16$ cd dir.cholera_fna_190`
 
-* Creating a text file with a list of gff IDs and their path \
+* Creating a text file with a list of gff IDs and their path 
   * To get a list of just the file paths \
  `ep16@farm5-head1:/lustre/scratch125/pam/teams/team216/ep16/dir.cholera_fna_190$ find /lustre/scratch125/pam/teams/team216/ep16/dir.cholera_fna_190 -type f > list_of_fna_files.txt`
   * To ceate a file list with the gff sample IDs and their path \
