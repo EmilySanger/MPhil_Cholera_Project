@@ -1,8 +1,8 @@
-#This file contains the code I used for Finding Core Genes and Structures Manually in R Studio 
-Date of Work: 17 May
+###This file contains the code I used for Finding Core Genes and Structures Manually in R Studio 
+# Date of Work: 17 May
 
 
-##Part 1 (Genes)
+## Part 1 (Genes)
 gene.matrix <- read.table("Google Drive/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190_#/gene_presence_absence_#.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
 
 
