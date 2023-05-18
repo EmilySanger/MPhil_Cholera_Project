@@ -26,7 +26,7 @@ gene.matrix <- gene.matrix %>%
   relocate(category, .before = 1)
 
 # calculate the summary statistics 
-`summary.stats.genes = gene.matrix %>%
+summary.stats.genes = gene.matrix %>%
  group_by(category) %>%
  count()
 summary.stats.genes
