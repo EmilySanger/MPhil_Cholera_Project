@@ -18,7 +18,7 @@ gene.matrix <- gene.matrix %>%
   relocate(proportion, count, .before = 1)
 
 # Create a category column to the gene matrix
-gene.matrix$category <- ifelse(gene.matrix$proportion >= 0.95, "core", ifelse(gene.matrix$proportion <0.95 & gene.matrix$proportion >= 0.15, "intermediate frequency accessory", ifelse(gene.matrix$proportion < 0.15, "rare accessory", "")))
+gene.matrix$category <- ifelse(gene.matrix$proportion >= #, "core", ifelse(gene.matrix$proportion <# & gene.matrix$proportion >= 0.15, "intermediate frequency accessory", ifelse(gene.matrix$proportion < 0.15, "rare accessory", "")))
 
 # Move this column to the start of the gene matrix
 library(dplyr)
@@ -48,7 +48,7 @@ structure.matrix <- structure.matrix %>%
   relocate(proportion, count, .before = 1)
 
 # Add a category column to the structure matrix
-structure.matrix$category <- ifelse(structure.matrix$proportion >= 0.95, "core", ifelse(structure.matrix$proportion <0.95 & structure.matrix$proportion >= 0.15, "intermediate frequency accessory", ifelse(structure.matrix$proportion < 0.15, "rare accessory", "")))
+structure.matrix$category <- ifelse(structure.matrix$proportion >= #, "core", ifelse(structure.matrix$proportion <# & structure.matrix$proportion >= 0.15, "intermediate frequency accessory", ifelse(structure.matrix$proportion < 0.15, "rare accessory", "")))
 
 
 # Move this column to the start of the structure matrix
