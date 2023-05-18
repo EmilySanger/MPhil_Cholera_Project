@@ -54,7 +54,7 @@ structure.matrix$proportion <- structure.matrix$count/190
 # Move these columns to the start of the structure matrix
 library(dplyr)
 structure.matrix <- structure.matrix %>%
-  relocate(category, .before = 1)
+  relocate(proportion, count, .before = 1)
 
 
 # Add a category column to the structure matrix
