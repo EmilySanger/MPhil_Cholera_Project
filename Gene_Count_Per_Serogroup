@@ -2,6 +2,11 @@
 ##This is useful for visalising how gene_count in the biosynthetic cluster varies across serogrups 
 ## Date of Work: 17 May
 
+
+##Create a Gene.Matrix/ Upload the data 
+gene.matrix <- read.table("Google Drive/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190/gene_presence_absence.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
+View(gene.matrix)
+
 ## Part 1: Creating a Summary Table
 # Calculate the total count of genes in each serogroup
 serogroup_counts <- colSums(gene.matrix != 0)
