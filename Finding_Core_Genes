@@ -3,32 +3,27 @@
 
 
 ## Part 1 (Genes) ##
+# Upload the gene_presence_absence.Rtab file to R Studio
 gene.matrix <- read.table("Google Drive/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190_#/gene_presence_absence_#.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
-
 
 # Create a count column 
 gene.matrix$count <- as.numeric(apply(gene.matrix[,1:190], 1, sum))
 
-
 # Create a proportion/frequency column 
 gene.matrix$proportion <- gene.matrix$count/190
-
 
 # Move these columns to the start of the gene matrix
 library(dplyr)
 gene.matrix <- gene.matrix %>%
   relocate(proportion, count, .before = 1)
 
-
 # Create a category column to the gene matrix
 gene.matrix$category <- ifelse(gene.matrix$proportion >= 0.95, "core", ifelse(gene.matrix$proportion <0.95 & gene.matrix$proportion >= 0.15, "intermediate frequency accessory", ifelse(gene.matrix$proportion < 0.15, "rare accessory", "")))
-
 
 # Move this column to the start of the gene matrix
 library(dplyr)
 gene.matrix <- gene.matrix %>%
   relocate(category, .before = 1)
-
 
 # calculate the summary statistics 
 `summary.stats.genes = gene.matrix %>%
@@ -38,24 +33,19 @@ summary.stats.genes
 
 
 
-
 ## Part 2 (Structures) ##
 structure.matrix <- read.table("Google Drive/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190_#/struct_presence_absence_#.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
-
 
 # Create a count column 
 structure.matrix$count <- as.numeric(apply(structure.matrix[,1:190], 1, sum))
 
-
 # Create a proportion/frequency column 
 structure.matrix$proportion <- structure.matrix$count/190
-
 
 # Move these columns to the start of the structure matrix
 library(dplyr)
 structure.matrix <- structure.matrix %>%
   relocate(proportion, count, .before = 1)
-
 
 # Add a category column to the structure matrix
 structure.matrix$category <- ifelse(structure.matrix$proportion >= 0.95, "core", ifelse(structure.matrix$proportion <0.95 & structure.matrix$proportion >= 0.15, "intermediate frequency accessory", ifelse(structure.matrix$proportion < 0.15, "rare accessory", "")))
