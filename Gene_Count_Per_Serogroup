@@ -1,0 +1,50 @@
+###This file contains the code I used for generating a graph which orders serogroups by thier gene_count
+##This is useful for visalising how gene_count in the biosynthetic cluster varies across serogrups 
+## Date of Work: 17 May
+
+## Part 1: Creating a Summary Table
+# Calculate the total count of genes in each serogroup
+serogroup_counts <- colSums(gene.matrix != 0)
+
+# Define the breakpoints for gene count sections
+breakpoints <- c(1, 10, 20, 30, 40, 50, 60)
+
+# Create a data frame with the gene count sections
+gene_count_df <- data.frame(Gene_Count = serogroup_counts)
+gene_count_df$Gene_Count_Section <- cut(serogroup_counts, breakpoints, include.lowest = TRUE, labels = c("1-9", "10-19", "20-29", "30-39", "40-49", "50-59"))
+
+# Count the occurrences of each gene count section
+gene_count_table <- table(gene_count_df$Gene_Count_Section)
+
+# Create a new data frame with column names
+gene_count_table <- data.frame(Gene_Count_Section = names(gene_count_table), Serotype_Count = as.vector(gene_count_table))
+
+# View the gene count table
+View(gene_count_table)
+
+
+
+
+
+## Part 2: Creating a graph
+library(ggplot2)
+
+# Calculate the number of genes per serogroup
+gene_counts <- colSums(gene.matrix != 0)
+
+# Create a data frame with serogroup and gene count
+serogroup_data <- data.frame(Serogroup = names(gene_counts), Gene_Count = gene_counts)
+
+# Order the data frame by gene count
+serogroup_data <- serogroup_data[order(serogroup_data$Gene_Count), ]
+
+# Convert Serogroup to factor with desired order
+serogroup_data$Serogroup <- factor(serogroup_data$Serogroup, levels = serogroup_data$Serogroup)
+
+# Create the plot with points and line of best fit
+ggplot(data = serogroup_data, aes(x = Serogroup, y = Gene_Count)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Serogroup", y = "Gene Count") +
+  ggtitle("Number of Genes per Serogroup") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
