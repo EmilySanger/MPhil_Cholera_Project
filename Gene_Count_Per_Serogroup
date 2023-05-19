@@ -3,6 +3,7 @@
 ## Date of Work: 17 May
 
 
+### PART 1: Genes ###
 ##Create a Gene.Matrix/ Upload the data 
 gene.matrix <- read.table("Google Drive/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190/gene_presence_absence.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
 View(gene.matrix)
@@ -31,7 +32,7 @@ View(gene_count_table)
 
 
 
-## Part 2: Creating a graph
+## Generate a graph
 library(ggplot2)
 
 # Calculate the number of genes per serogroup
@@ -53,3 +54,26 @@ ggplot(data = serogroup_data, aes(x = Serogroup, y = Gene_Count)) +
   labs(x = "Serogroup", y = "Gene Count") +
   ggtitle("Number of Genes per Serogroup") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
+  
+  
+  
+### PART 2: Stuructures ###
+# Calculate the total count of structures in each serogroup
+serogroup_counts <- colSums(structure.matrix != 0)
+
+# Define the breakpoints for structure count sections
+breakpoints <- c(0, 5, 10, 15, 20, Inf)
+
+# Create a data frame with the structure count sections
+structure_count_df <- data.frame(structure_Count = serogroup_counts)
+structure_count_df$structure_Count_Section <- cut(serogroup_counts, breakpoints, include.lowest = TRUE, labels = c("1-5", "6-9", "10-14", "15-20", "20+"))
+
+# Count the occurrences of each structure count section
+structure_count_table <- table(structure_count_df$structure_Count_Section)
+
+# Create a new data frame with column names
+structure_count_table <- data.frame(structure_Count_Section = names(structure_count_table), Serotype_Count = as.vector(structure_count_table))
+
+# View the structure count table
+View(structure_count_table)
+
