@@ -4,11 +4,12 @@
 
 
 ### PART 1: Genes ###
-##Create a Gene.Matrix/ Upload the data 
+
+# Create a gene.matrix by uploading the gene_presence_absence.Rtab
 gene.matrix <- read.table("Google Drive/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190/gene_presence_absence.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
 View(gene.matrix)
 
-## Part 1: Creating a Summary Table
+## Part 1A: Create a Summary Table
 # Calculate the total count of genes in each serogroup
 serogroup_counts <- colSums(gene.matrix != 0)
 
@@ -30,9 +31,7 @@ View(gene_count_table)
 
 
 
-
-
-## Generate a graph
+## Part 1B: Generate a graph
 library(ggplot2)
 
 # Calculate the number of genes per serogroup
@@ -57,7 +56,13 @@ ggplot(data = serogroup_data, aes(x = Serogroup, y = Gene_Count)) +
   
   
   
+  
 ### PART 2: Stuructures ###
+
+# Create a structure.matrix by uploading the struct_presence_absence.Rtab
+structure.matrix <- read.table("Google Drive/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190/struct_presence_absence.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
+
+## Part 2A: Create a Summary Table
 # Calculate the total count of structures in each serogroup
 serogroup_counts <- colSums(structure.matrix != 0)
 
@@ -76,4 +81,30 @@ structure_count_table <- data.frame(structure_Count_Section = names(structure_co
 
 # View the structure count table
 View(structure_count_table)
+
+
+
+## Part 2B: Generate a graph
+library(ggplot2)
+
+# Calculate the number of structures per serogroup
+structure_counts <- colSums(structure.matrix != 0)
+
+# Create a data frame with serogroup and structure count
+serogroup_data <- data.frame(Serogroup = names(structure_counts), structure_Count = structure_counts)
+
+# Order the data frame by structure count
+serogroup_data <- serogroup_data[order(serogroup_data$structure_Count), ]
+
+# Convert Serogroup to factor with desired order
+serogroup_data$Serogroup <- factor(serogroup_data$Serogroup, levels = serogroup_data$Serogroup)
+
+# Create the plot with points and line of best fit
+ggplot(data = serogroup_data, aes(x = Serogroup, y = structure_Count)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Serogroup", y = "Structure Count") +
+  ggtitle("Number of Structure per Serogroup") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
 
