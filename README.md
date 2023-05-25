@@ -6,10 +6,10 @@ Directions for how to use [R Markdown can be found at this Link](https://cambiot
 
 ## Logging Into the Farm
 To login from Sanger \
-`ssh farm5` \
+`ssh farm5` 
 
 To login from home \
-`Ssh ep16@ssh.sanger.ac.uk` \
+`ssh ep16@ssh.sanger.ac.uk` \
 Go to `farm5-login`
 
 ## Finding Directories
