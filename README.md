@@ -4,6 +4,14 @@ Date of Project: April-July 2023
 
 Directions for how to use [R Markdown can be found at this Link](https://cambiotraining.github.io/reproducibility-training/rmarkdown.html#R_Markdown)
 
+## Logging Into the Farm
+To login from Sanger \
+`ssh farm5` \
+
+To login from home \
+`Ssh ep16@ssh.sanger.ac.uk` \
+Go to `farm5-login`
+
 ## Finding Directories
 Three important directories to note 
 1.	**The main PaM cholera directory in nfs** \
