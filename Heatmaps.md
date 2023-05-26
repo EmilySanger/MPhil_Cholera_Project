@@ -5,24 +5,24 @@
 ## Option 1: Simple Heatmap ## 
 
 #Upload gene.matrix 
-gene.matrix <- read.table("Google Drive/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190/gene_presence_absence.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
+`gene.matrix <- read.table("Google Drive/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190/gene_presence_absence.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
 
 View(structure.matrix)
 # Convert gene matrix to presence/absence matrix
-presence_matrix <- ifelse(gene.matrix != 0, 1, 0)
+`presence_matrix <- ifelse(gene.matrix != 0, 1, 0)`
 
 # Create a heatmap
-heatmap(presence_matrix, Rowv = NA, Colv = NA, col = colorRampPalette(c("white", "blue"))(100),
+`heatmap(presence_matrix, Rowv = NA, Colv = NA, col = colorRampPalette(c("white", "blue"))(100),
 scale = "none", xlab = "Serogroups", ylab = "Genes",
-main = "Distribution of Genes between Serogroups")
+main = "Distribution of Genes between Serogroups")`
 
 
 ## Option 2: Heatmap with Phylogenetic Clustering## 
 
 ## Upload the gene.matrix in R from the gene_prescense_absence.Rtab file
-gene.matrix <- read.table("Google Drive/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190/gene_presence_absence.Rtab",
+`gene.matrix <- read.table("Google Drive/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190/gene_presence_absence.Rtab",
 header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
-class(gene.matrix$SRO100_LPS)
+class(gene.matrix$SRO100_LPS)`
 
 # change to numeric
 gene.matrix <- gene.matrix %>%
