@@ -60,7 +60,7 @@ ggplot(data = serogroup_data, aes(x = Serogroup, y = Gene_Count)) +
 ### PART 2: Stuructures ###
 
 # Create a structure.matrix by uploading the struct_presence_absence.Rtab
-structure.matrix <- read.table("Google Drive/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190/struct_presence_absence.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
+structure.matrix <- read.table(""/Users/ep16/Library/CloudStorage/GoogleDrive-ep16@sanger.ac.uk/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190_3/struct_presence_absence.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
 
 ## Part 2A: Create a Summary Table
 # Calculate the total count of structures in each serogroup
