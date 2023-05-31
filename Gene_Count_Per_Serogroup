@@ -62,22 +62,22 @@ serogroup_counts <- colSums(gene.matrix)
 # Create a new table
 gene_counts_table <- data.frame(Serogroup = names(serogroup_counts), Gene_Count = serogroup_counts)
 
-# View the new table
-print(gene_counts_table)
-
-# Create a histogram 
+# Create a histogram with overlaid density plot
 library(ggplot2)
 
 # Sample data (replace with your actual data)
 data <- gene_counts_table
 
-# Create the histogram using ggplot
-ggplot(data, aes(x = Gene_Count)) +
-  geom_histogram(color = "black", fill = "skyblue", alpha = 0.8) +
-  labs(x = "Gene Count", y = "Frequency", title = "Histogram of Gene Count") +
+# Create the histogram with density plot using ggplot
+histogram_density_plot <- ggplot(data, aes(x = Gene_Count)) +
+  geom_histogram(aes(y = after_stat(density)), color = "black", fill = "skyblue", alpha = 0.8, bins = 20) +
+  geom_density(color = "red", size = 1) +
+  labs(x = "Gene Count", y = "Density", title = "Total Gene Count Across Serogroups") +
   theme_minimal()
 
-# Show the histogram
+# Show the histogram with the density plot
+print(histogram_density_plot)
+
 
   
   
@@ -142,22 +142,22 @@ serogroup_counts <- colSums(structure.matrix)
 # Create a new table
 structure_counts_table <- data.frame(Serogroup = names(serogroup_counts), Structure_Count = serogroup_counts)
 
-# View the new table
-print(structure_counts_table)
-
-# Create a histogram 
+# Create a histogram with overlaid density plot
 library(ggplot2)
 
 # Sample data (replace with your actual data)
 data <- structure_counts_table
 
-# Create the histogram using ggplot
-ggplot(data, aes(x = Structure_Count)) +
-  geom_histogram(color = "black", fill = "skyblue", alpha = 0.8) +
-  labs(x = "Structure Count", y = "Frequency", title = "Histogram of Structure Count") +
+# Create the histogram with density plot using ggplot
+histogram_density_plot <- ggplot(data, aes(x = Structure_Count)) +
+  geom_histogram(aes(y = after_stat(density)), color = "black", fill = "skyblue", alpha = 0.8, bins = 20) +
+  geom_density(color = "red", size = 1) +
+  labs(x = "Structure Count", y = "Density", title = "Total Structure Count Across Serogroups") +
   theme_minimal()
 
-# Show the histogram
+# Show the histogram with the density plot
+print(histogram_density_plot)
+
 
 
 
