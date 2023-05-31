@@ -53,14 +53,39 @@ ggplot(data = serogroup_data, aes(x = Serogroup, y = Gene_Count)) +
   labs(x = "Serogroup", y = "Gene Count") +
   ggtitle("Number of Genes per Serogroup") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
-  
-  
+ 
+ 
+## Part 1C: Generate a Histogram
+# Count the number of genes for each serogroup
+serogroup_counts <- colSums(gene.matrix)
+
+# Create a new table
+gene_counts_table <- data.frame(Serogroup = names(serogroup_counts), Gene_Count = serogroup_counts)
+
+# View the new table
+print(gene_counts_table)
+
+# Create a histogram 
+library(ggplot2)
+
+# Sample data (replace with your actual data)
+data <- gene_counts_table
+
+# Create the histogram using ggplot
+ggplot(data, aes(x = Gene_Count)) +
+  geom_histogram(color = "black", fill = "skyblue", alpha = 0.8) +
+  labs(x = "Gene Count", y = "Frequency", title = "Histogram of Gene Count") +
+  theme_minimal()
+
+# Show the histogram
+
   
   
 ### PART 2: Stuructures ###
 
 # Create a structure.matrix by uploading the struct_presence_absence.Rtab
 structure.matrix <- read.table("/Users/ep16/Library/CloudStorage/GoogleDrive-ep16@sanger.ac.uk/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190_3/struct_presence_absence_3.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
+
 
 ## Part 2A: Create a Summary Table
 # Calculate the total count of structures in each serogroup
@@ -106,5 +131,33 @@ ggplot(data = serogroup_data, aes(x = Serogroup, y = structure_Count)) +
   labs(x = "Serogroup", y = "Structure Count") +
   ggtitle("Number of Structure per Serogroup") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
+  
+   
+   
+   
+## Part 2C: Generate a histogram
+# Count the number of structures for each serogroup
+serogroup_counts <- colSums(structure.matrix)
+
+# Create a new table
+structure_counts_table <- data.frame(Serogroup = names(serogroup_counts), Structure_Count = serogroup_counts)
+
+# View the new table
+print(structure_counts_table)
+
+# Create a histogram 
+library(ggplot2)
+
+# Sample data (replace with your actual data)
+data <- structure_counts_table
+
+# Create the histogram using ggplot
+ggplot(data, aes(x = Structure_Count)) +
+  geom_histogram(color = "black", fill = "skyblue", alpha = 0.8) +
+  labs(x = "Gene Count", y = "Frequency", title = "Histogram of Gene Count") +
+  theme_minimal()
+
+# Show the histogram
+
 
 
