@@ -109,7 +109,7 @@ View(structure_count_table)
 
 
 
-## Part 2B: Generate a graph
+## PART 2B: Generate a graph
 library(ggplot2)
 
 # Calculate the number of structures per serogroup
@@ -135,7 +135,7 @@ ggplot(data = serogroup_data, aes(x = Serogroup, y = structure_Count)) +
    
    
    
-## Part 2C: Generate a histogram
+## PART 2C: Generate a histogram
 # Count the number of structures for each serogroup
 serogroup_counts <- colSums(structure.matrix)
 
@@ -157,6 +157,27 @@ histogram_density_plot <- ggplot(data, aes(x = Structure_Count)) +
 
 # Show the histogram with the density plot
 print(histogram_density_plot)
+
+
+# PART 2D: Summary Statistics 
+# Calculate summary statistics for structure counts
+summary_stats <- summary(structure_counts_table$Structure_Count)
+mode_value <- mode(structure_counts_table$Structure_Count)
+sd_value <- sd(structure_counts_table$Structure_Count)
+
+# Print the summary statistics
+cat("Summary Statistics:\n")
+print(summary_stats)
+cat("\nMode:", mode_value)
+cat("\nStandard Deviation:", sd_value)
+
+# Perform Shapiro-Wilk test for normality
+shapiro_test <- shapiro.test(structure_counts_table$Structure_Count)
+
+# Print the result of Shapiro-Wilk test
+cat("\nShapiro-Wilk Test for Normality:")
+print(shapiro_test)
+
 
 
 
