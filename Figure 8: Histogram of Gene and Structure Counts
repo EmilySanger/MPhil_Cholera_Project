@@ -1,5 +1,4 @@
-###This file contains the code I used for generating a graph which orders serogroups by thier gene_count
-##This is useful for visalising how gene_count in the biosynthetic cluster varies across serogrups 
+###This file contains the code I used for generating histpgrams which orders serogroups by thier gene_count
 ## Date of Work: 17 May
 
 
