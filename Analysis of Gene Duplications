@@ -1,0 +1,88 @@
+Analysis of Gene Duplications
+
+## Part 1:Upload gene_presence_absence_roary_3 to R
+gene.matrix.roary <- read.table("/Users/ep16/Library/CloudStorage/GoogleDrive-ep16@sanger.ac.uk/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190_3/gene_presence_absence_roary_3.csv", header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
+
+## Part 2: Remove any columns (serogroups) starting with "SR" where ";" is not present in at least one cell
+# Get the column indices where the column name starts with "SR" and any cell contains ";"
+cols_to_remove <- sapply(names(gene_presence_absence_3), function(col) startsWith(col, "SR") && !any(grepl(";", gene_presence_absence_3[[col]])))
+# Subset the data frame to exclude the selected columns
+filtered_cols_df <- gene_presence_absence_3[, !cols_to_remove]
+
+
+## Part 3: Remove any rows (genes) where ";" is not present in at least one cell
+# Remove any rows (genes) where ";" is not present in at least one cell
+# Remove any rows where ";" is not present in at least one cell
+filtered_df <- filtered_cols_df %>%
+  filter(if_any(starts_with("SR"), ~grepl(";", .)))
+# Print the new filtered tibble
+print(filtered_df)
+
+
+## Part 4: Count how many times “;” appears in gene_presence_absence_3
+# Get the column indices starting with "SR"
+sr_columns <- grep("^SR", names(gene_presence_absence_3))
+# Count the total number of ";" occurrences in the selected columns
+total_count <- sum(sapply(gene_presence_absence_3[, sr_columns], function(col) sum(lengths(regmatches(col, gregexpr(";", col))))))
+# Print the total count
+print(total_count)
+ # List the genes which are repeated more than once
+ print(filtered_df$Gene)
+
+## Part 5: list the genes which are found more than one time in a single sergroup
+# Count total occurrences of ';' in each row
+total_count <- apply(filtered_df, 1, function(row) sum(lengths(regmatches(row, gregexpr(";", row)))))
+# Create a new table with "Gene" and "Total_Count" columns
+result_table <- data.frame(Gene = filtered_df$Gene, Total_Count = total_count)
+# Print the resulting table
+print(result_table)
+
+## Part 6: To calculate the number of times ";" appears in each row 
+# Subset the dataframe to select the columns starting with "SR"
+columns_to_count <- colnames(filtered_df)[startsWith(colnames(filtered_df), "SR")]
+# Count total occurrences of ';' in each row for the selected columns
+total_count <- apply(filtered_df[, columns_to_count], 1, function(row) sum(lengths(regmatches(row, gregexpr(";", row)))))
+# Create a new table with "Gene" and "Total_Count" columns
+result_table <- data.frame(Gene = filtered_df$Gene, Total_Count = total_count)
+# Print the resulting table
+print(result_table)
+
+
+## Part 7: To calculate the number cells that contain ";" in each row 
+# Subset the dataframe to select the columns starting with "SR"
+columns_to_count <- colnames(filtered_df)[startsWith(colnames(filtered_df), "SR")]
+# Iterate over each row
+for (i in 1:nrow(filtered_df)) {
+  row <- filtered_df[i, ]
+  gene <- row$Gene
+  cell_count <- sum(grepl(";", row[columns_to_count], fixed = TRUE))
+  print(paste("Gene:", gene, "| Count:", cell_count))
+}
+
+## Part 8: To calculate the most common genes in total (including redundancy/repeated genes)
+# Upload the gene_presence_absence.Rtab file to R Studio
+gene.matrix <- read.table("/Users/ep16/Library/CloudStorage/GoogleDrive-ep16@sanger.ac.uk/My Drive/Documents /SHH_Temrinal Files/out.panarootest_gff_190_3/gene_presence_absence_3.Rtab",header = T, stringsAsFactors = F, check.names = T, comment.char = "", quote = "", row.names = 1)
+# Calculate the sum of each row (gene)
+gene_counts <- rowSums(gene.matrix)
+# Create a new table with two columns: gene names and the total count of serogroups with each gene
+new_table <- data.frame(Gene = rownames(gene.matrix), Count = gene_counts)
+# Print the new table
+print(new_table)
+
+## Part 9: Creating a HIstogram for the Number of Repeats for group_1054 in each serogroup  
+# Step 1: Create a data frame
+serogroup <- c("O181", "O40", "O69", "O94", "O2", "O124", "O132", "O147", "O173", "O1In", "O1Og", "O98", "O104", "O10", "O169", "O188", "O45", "O61", "O64", "O86", "O108", "O111", "O145", "O150", "O151", "O161", "O17", "O182", "O183", "O187", "O192", "O196", "O198", "O209", "O29", "O48", "O65", "O75", "O80", "O96")
+number_of_repeats <- c(9, 7, 7, 7, 6, 5, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2)
+# Create a data frame with unique variable names
+my_data <- data.frame(Serogroup = serogroup, Number_of_Repeats = number_of_repeats)
+# Step 2: Load ggplot2 library
+library(ggplot2)
+# Step 3: Create the histogram with modified x-axis
+ggplot(my_data, aes(x = Number_of_Repeats)) +
+  geom_histogram(binwidth = 1, color = "black", fill = "lightblue") +
+  scale_x_continuous(breaks = seq(1, 10, by = 1)) +  # Set breaks from 1 to 10 with an interval of 1
+  labs(title = "Histogram of Number of Repeats for Serogroup group_1054",
+       x = "Number of group_1054 Repeats",
+       y = "Frequency")
+
+
