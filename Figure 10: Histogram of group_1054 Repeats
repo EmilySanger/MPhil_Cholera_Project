@@ -1,0 +1,19 @@
+###This file contains the code I used for generating Figure 10: Distribution of Number of Repeats for group_1054 in the 41 Serogroups with Multiple Copies of group_1054## Part 9: Creating a HIstogram for the Number of Repeats for group_1054 in each serogroup  
+
+# Step 1: Create a data frame
+serogroup <- c("O181", "O40", "O69", "O94", "O2", "O124", "O132", "O147", "O173", "O1In", "O1Og", "O98", "O104", "O10", "O169", "O188", "O45", "O61", "O64", "O86", "O108", "O111", "O145", "O150", "O151", "O161", "O17", "O182", "O183", "O187", "O192", "O196", "O198", "O209", "O29", "O48", "O65", "O75", "O80", "O96")
+number_of_repeats <- c(9, 7, 7, 7, 6, 5, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2)
+
+# Create a data frame with unique variable names
+my_data <- data.frame(Serogroup = serogroup, Number_of_Repeats = number_of_repeats)
+
+# Step 2: Load ggplot2 library
+library(ggplot2)
+
+# Step 3: Create the histogram with modified x-axis
+ggplot(my_data, aes(x = Number_of_Repeats)) +
+  geom_histogram(binwidth = 1, color = "black", fill = "lightblue") +
+  scale_x_continuous(breaks = seq(1, 10, by = 1)) +  # Set breaks from 1 to 10 with an interval of 1
+  labs(title = "Histogram of Number of Repeats for Serogroup group_1054",
+       x = "Number of group_1054 Repeats",
+       y = "Frequency")
