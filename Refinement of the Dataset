@@ -1,43 +1,28 @@
 ###This file contains the code I used for refinng the original dataset with 210 samples to the 190 samples that were used in our study
 
-# Step 1: Make a list of samples to remove
+# Copy the gff directory from nfs into your lustre
+cp -r /nfs/pathogen/cholera_club/O-antiseq_JVIserogroupRefStrainOantigenLPSloci/gff dir.gff_samples`
+
+# Create a file_list with all the samples\
+ls /nfs/pathogen/cholera_club/O-antiseq_JVIserogroupRefStrainOantigenLPSloci/gff > file_list.txt`
+
+# Remove the .gff file extension from the sample names in the file_list 
+sed 's/\.gff$//' file_list.txt > file_list_noext.txt`
+
+# Make list of serogroups to remove from list in excel 
+# This was done in an [excel sreadsheet](https://docs.google.com/spreadsheets/d/1RYOf-7zdLE6Z67yM-SPfJGVH4BGBFUrV/edit#gid=1880666571) which contains metadata of the sampled in our dataset. I found the sample IDs of the non-vibrio cholera samples, and added these to a blank page in the text-editor BBEdit. These were then copy-pasted into a text-file in the terminal using nano.
+nano remove_samples.txt
 remove_samples = [
     "SRO154_LPS", "SRO195_LPS", "SRO21_LPS", "SRO31_LPS", "SRO33_LPS",
     "SRO72_LPS", "SRO101_LPS", "SRO114_LPS", "SRO115_LPS", "SRO116_LPS",
     "SRO117_LPS", "SRO135_LPS", "SRO138_LPS", "SRO194_LPS", "SRO201_LPS",
     "SRO202_LPS"
 ]
+# Remove the non-cholera samples from the original file_list to produce a new list of cholera-only samples
+grep -v -f remove_samples.txt file_list_noext.txt > cholera_samples_list.txt
 
-# Step 2: Create the remove_samples.txt file
-with open("remove_samples.txt", "w") as remove_file:
-    remove_file.write("\n".join(remove_samples))
+# Remove '_LPS' from the end of each sample name 
+sed -i 's/_LPS//' cholera_samples_list.txt
 
-# Step 3: Create a list of cholera samples and store in a new file
-with open("cholera_samples_list.txt", "w") as cholera_file:
-    with open("file_list_noext.txt", "r") as file_list:
-        for line in file_list:
-            sample = line.strip()
-            if not any(sample.endswith("_" + s) for s in remove_samples):
-                cholera_file.write(sample + "\n")
-
-# Step 4: Remove the "LPS" from the cholera samples list
-with open("cholera_samples_list.txt", "r") as cholera_file:
-    cholera_samples = cholera_file.read().splitlines()
-
-with open("cholera_samples_list.txt", "w") as cholera_file:
-    for sample in cholera_samples:
-        cholera_file.write(sample.replace("_LPS", "") + "\n")
-
-# Step 5: Create a new directory and copy the cholera samples
-os.makedirs("dir.new_cholera", exist_ok=True)
-
-for sample in cholera_samples:
-    source_gff_file = f"gff/{sample}.gff"
-    dest_gff_file = f"dir.new_cholera/{sample}.gff"
-    os.system(f"cp {source_gff_file} {dest_gff_file}")
-
-    source_fna_file = f"/nfs/pathogen/cholera_club/O-antiseq_JVIserogroupRefStrainOantigenLPSloci/fna/{sample}_LPS.fna"
-    dest_fna_file = f"dir.new_fna_cholera/{sample}_LPS.fna"
-    os.system(f"cp {source_fna_file} {dest_fna_file}")
-
-print("Cholera samples copied to dir.new_cholera and dir.new_fna_cholera.")
+# Create a new directory with only the cholera samples 
+for i in $(cat cholera_samples_list.txt); do cp /nfs/pathogen/cholera_club/O-antiseq_JVIserogroupRefStrainOantigenLPSloci/gff/${i}.gff dir.cholera_gff_190 ; done
