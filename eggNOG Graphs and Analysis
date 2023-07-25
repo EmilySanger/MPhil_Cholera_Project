@@ -1,0 +1,75 @@
+## Part 1: Running the eggNOG command 
+#Create a directory with the ffn files
+ep16@farm5-head1:/lustre/scratch125/pam/teams/team216/ep16$ for i in $(cat cholera_samples_list.txt); do cp /nfs/pathogen/cholera_club/O-antiseq_JVIserogroupRefStrainOantigenLPSloci/ffn/${i}_LPS.ffn dir.cholera_ffn_190 ; done
+#Create a text file with the combined ffn files
+ep16@farm5-head1:/lustre/scratch125/pam/teams/team216/ep16$ cat *ffn > combined_ffn.txt 
+grep -c ">" combined_ffn.txt 
+#Run the command using diamond (part of eggnog)
+bsub.py --threads 4 emapper.py --data_dir /data/pam/team230/ol6/scratch/software_testing/eggnog2/v2_test_data  -i /lustre/scratch125/pam/teams/team216/ep16/dir.cholera_ffn_190/combined_ffn.txt -o out.eggnog_diamond --itype genome --cpu 4
+
+
+
+## Part 2: Interpreting the eggNOG results
+# Upload and view the annotations file 
+data.ann <- read.table("TEXT_FILE_out.eggnog_diamond1.emapper.annotations", sep = "\t", header = TRUE, quote = "")
+View(data.ann)
+# Count how many COG (Clusters of Orthologous Groups) categories there are
+count <- length(unique(data.ann$COG_category))
+print(count)
+count <- sum(data.ann$COG_category == "-")
+print(count)
+# Print/list the 33 unique COG categories
+unique_categories <- unique(data.ann$COG_category)
+for (category in unique_categories) {
+  cat(category, "\n")}
+# Upload and view the annotations file 
+data.ann <- read.table("TEXT_FILE_out.eggnog_diamond1.emapper.annotations", sep = "\t", header = TRUE, quote = "")
+View(data.ann)
+# Count how many COG (Clusters of Orthologous Groups) categories there are
+count <- length(unique(data.ann$COG_category))
+print(count)
+# Print/list the 33 unique COG categories
+unique_categories <- unique(data.ann$COG_category)
+for (category in unique_categories) {
+  cat(category, "\n")}
+
+
+## Part 3: Creating a Bar Plot with the Original Count Values 
+#Upload the annotations file from eggnog. Save it as data.ann
+#Count the frequency of each COG category
+category_counts <- table(data.ann$COG_category)
+#Convert the frequency table to a data frame
+category_df <- data.frame(Category = names(category_counts),
+                    Frequency = as.numeric(category_counts),
+                    stringsAsFactors = FALSE)
+#Sort the data frame by frequency in descending order
+category_df <- category_df[order(-category_df$Frequency), ]
+#Reorder the levels of the Category factor variable
+category_df$Category <- factor(category_df$Category, levels = category_df$Category)
+#Create the bar plot
+print(ggplot(data = category_df, aes(x = Category, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  xlab("COG Category") +
+  ylab("Frequency") +
+  ggtitle("Frequency of COG Categories"))
+
+
+  
+## Part 3: Creating a Bar Plot with the New Count Values
+library(ggplot2)
+# Create a data.frame with the provided data
+data.new_counts <- data.frame(
+  "Category" = c("M", "S", "G", "L", "E", "J", "H", "-", "C", "D", "I", "T", "O", "F", "Q", "V", "U", "P", "N", "K"),
+  "Frequency" = c(2346.83, 806, 491, 340.25, 298.5, 239.5, 156.75, 139, 114, 99, 70.33, 54.25, 49.83, 45, 33.5, 31, 28, 19, 10, 5.25)
+)
+#Sort the data frame by frequency in descending order
+data.new_counts <- data.new_counts[order(-category_df$Frequency), ]
+#Reorder the levels of the Category factor variable
+data.new_counts$Category <- factor(data.new_counts$Category, levels = data.new_counts$Category)
+#Create the bar plot
+print(ggplot(data = data.new_counts, aes(x = Category, y = Frequency)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  xlab("COG Category") +
+  ylab("Frequency") +
+  ggtitle("Frequency of COG Categories"))
+
